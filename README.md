@@ -129,7 +129,36 @@ lopizadorRamda("Charly Pozzo") // -> Charly García
 Bueno, cuál fue la diferencia al tener que cambiar la implementación de ambas funciones?, en la función de JavaScript plano tuvimos que cambiar la estructura del cuerpo de la función, mientras que en Ramda solo agregamos un "paso" al pipeline, ahora imaginá esto en un caso real, que preferís cambiar el cuerpo de una función compleja o agregar un paso (que hasta puede ser reutilizable en otras partes de la app) y solo meterlo al pipeline?.
 
 ## Helpers
-Basta de chacharas, ahora que sabes masomenos de que va esto, vamos a ver algunos de los helpers
+Basta de chacharas, ahora que sabes masomenos de que va esto, vamos a ver algunos de los helpers. Para empezar a ver los helpers es importante darse cuenta de algo, cuando nosotros trabajamos con helpers de Ramda, estos, en su mayoria, reciben el parametro a modificar como último parametro, por ejemplo:
+
+```javascript
+R.contains(3, [1, 2, 3]); // -> true
+```
+
+Esto es para que cuando nosotros creemos nuestros pipelines, funciones simples o hagamos composición de funciones, podamos hacerlo sin necesidad de tener el valor todavia disponible, por ejemplo:
+
+```javascript
+const contains3 = R.contains(3);
+
+contains3([1, 2, 3]) // -> true
+contains3([1, 2]) // -> false
+```
+
+### R.pipe
+#### [DEMO](http://bit.ly/2CEUIBt)
+Muchas veces vamos a querer crear un pipeline de funciones como vimos mas arriba, basicamente seria ejecutar una función sobre un valor y luego pasar ese resultado a otra función (y así sucesivamente en caso de ser necesario).
+
+```javascript
+const agregarFierro = frase => `${frase} 🔫`
+const agregarJapish = frase => `${frase} japish japish`
+
+const ritmoSustanciar = R.pipe(
+  agregarFierro,
+  agregarJapish
+)
+
+ritmoSustanciar('Ahora sos, cabeza de tortuga') // -> Ahora sos, cabeza de tortuga 🔫 japish japish
+```
 
 ## 😱 Fin?
 Bueno, hasta aquí llego mi amor, pero eso no significa que el tuyo también, la docu de Ramda es muy larga y hay +240 helpers! 🤯, así que imaginate todo lo que se puede hacer, se creativo, innova, mete magia, ritmo y sustancia y compartí lo que hagas. Cualquier duda preguntá y nunca, nunca dejes de aprender! (We re filosófico el Goncy)

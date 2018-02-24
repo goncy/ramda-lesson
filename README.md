@@ -129,6 +129,9 @@ lopizadorRamda("Charly Pozzo") // -> Charly García
 Bueno, cuál fue la diferencia al tener que cambiar la implementación de ambas funciones?, en la función de JavaScript plano tuvimos que cambiar la estructura del cuerpo de la función, mientras que en Ramda solo agregamos un "paso" al pipeline, ahora imaginá esto en un caso real, que preferís cambiar el cuerpo de una función compleja o agregar un paso (que hasta puede ser reutilizable en otras partes de la app) y solo meterlo al pipeline?.
 
 ## Helpers
+![02](./assets/macriwiro.jpg)
+> Let's get this party started
+
 Basta de chacharas, ahora que sabes masomenos de que va esto, vamos a ver algunos de los helpers. Para empezar a ver los helpers es importante darse cuenta de algo, cuando nosotros trabajamos con helpers de Ramda, estos, en su mayoria, reciben el parametro a modificar como último parametro, por ejemplo:
 
 ```javascript
@@ -182,7 +185,53 @@ ponerRitmo('Mala fama - Aguante la tuca') // -> {"cabina": {"pc": {"musica": {"s
 
 > Tip: También tenés `R.assoc` si el cambio que tenes que hacer es sobre un nivel solo.
 
+### R.partition
+#### [DEMO](http://bit.ly/2CJjbpm)
+Algunas veces necesitamos filtrar un array por una condición, pero tambien necesitamos un listado de los elementos que no cumplen esa condición, por lo que tenemos que terminar duplicando un filter, por ejemplo, imaginando que tenemos esta lista de canciones:
+
+```javascript
+const canciones = [{
+  nombre: 'Mala Fama - Desnudos',
+  escuchada: true
+}, {
+  nombre: 'Mala Fama - Duro Duro',
+  escuchada: false
+}, {
+  nombre: 'Mala Fama - El Corazón',
+  escuchada: true
+}, {
+  nombre: 'Mala Fama - El Pollerudo',
+  escuchada: false
+}]
+```
+Hariamos lo siguiente:
+
+```javascript
+const escuchadas = canciones.filter(cancion => cancion.escuchada)
+const noEscuchadas = canciones.filter(cancion => !cancion.escuchada)
+
+console.log(
+  'escuchadas: ', escuchadas,
+  'no escuchadas: ', noEscuchadas
+)
+```
+
+`R.partition` to the rescue:
+```javascript
+const [escuchadas, noEscuchadas] = R.partition(R.prop('escuchada'), canciones)
+
+console.log(
+  'escuchadas: ', escuchadas,
+  'no escuchadas: ', noEscuchadas
+)
+```
+
+De esta manera, `R.partition` va a pasar cada elemento del array a `R.prop`, que va a devolver la prop `escuchada`, de cada elemento, la cual va a ser `true` o `false`, todos los elementos que sean true, iran al primer elemento del resultado, los que de false iran al segundo, asi que usando destructuring podemos obtenerlos fácilmente 💪
+
 ## 😱 Fin?
+![03](./assets/malamacri.jpg)
+> Este lección fue bendecida por el mala fama cheto, tu código va a ser piola, nunca perderá el ritmo y siempre tendrá sustancia de la buena (japish)
+
 Bueno, hasta aquí llego mi amor, pero eso no significa que el tuyo también, la docu de Ramda es muy larga y hay +240 helpers! 🤯, así que imaginate todo lo que se puede hacer, se creativo, innova, mete magia, ritmo y sustancia y compartí lo que hagas. Cualquier duda preguntá y nunca, nunca dejes de aprender! (We re filosófico el Goncy)
 
 ## Docs

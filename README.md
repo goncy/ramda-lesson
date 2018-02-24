@@ -185,6 +185,28 @@ ponerRitmo('Mala fama - Aguante la tuca') // -> {"cabina": {"pc": {"musica": {"s
 
 > Tip: También tenés `R.assoc` si el cambio que tenes que hacer es sobre un nivel solo.
 
+### R.project
+#### [DEMO](http://bit.ly/2Ftc7zP)
+Algunas veces tenemos un array de objetos, cada uno de esos objetos tiene muchas propiedades que no usamos y no queremos tenerlas, por que vamos a mandar eso al server, o vamos a iterarlo o sea cual sea el motivo, no pinta tener esas properties, thanks Gaben we have `R.project`.
+
+```javascript
+const ranchada = [{
+  nombre: 'Meta Guacha',
+  ritmo: 'bien piola',
+  hobbie: 'puntear',
+  estudios: 'de sangre'
+}, {
+  nombre: 'Los gedes',
+  ritmo: 're gede',
+  hobbie: 'geder',
+  estudios: 'uno'
+}]
+
+R.project(['nombre', 'ritmo'], ranchada) // -> [{"nombre": "Meta Guacha", "ritmo": "bien piola"}, {"nombre": "Los gedes", "ritmo": "re gede"}]
+```
+
+> Tip: Si en vez de un array queres obtener solo algunas properties de un objeto, podes usar `R.pick`
+
 ### R.partition
 #### [DEMO](http://bit.ly/2CJjbpm)
 Algunas veces necesitamos filtrar un array por una condición, pero tambien necesitamos un listado de los elementos que no cumplen esa condición, por lo que tenemos que terminar duplicando un filter, por ejemplo, imaginando que tenemos esta lista de canciones:
@@ -227,6 +249,59 @@ console.log(
 ```
 
 De esta manera, `R.partition` va a pasar cada elemento del array a `R.prop`, que va a devolver la prop `escuchada`, de cada elemento, la cual va a ser `true` o `false`, todos los elementos que sean true, iran al primer elemento del resultado, los que de false iran al segundo, asi que usando destructuring podemos obtenerlos fácilmente 💪
+
+### R.evolve
+#### [DEMO](http://bit.ly/2HI0pSZ)
+Este es uno de mis favoritos, aveces tenés un objeto y querés ejecutar una función sobre algunas properties, sin cambiar las otras y muy importante, sin mutar el objeto. Don't worry be pillo y usa `R.evolve`
+
+```javascript
+const recital = {
+  ranchada: 10,
+  ritmo: 9,
+  sustancia: 0,
+  ubicacion: {
+    direccion: 'Teatro Colón',
+    provincia: 'BSAS'
+  }
+}
+
+const publicitar = R.evolve({
+  ritmo: R.multiply(1000),
+  sustancia: R.always(Infinity),
+  ubicacion: {
+    direccion: 'Todo lado'
+  }
+})
+
+publicitar(recital) // -> {"ranchada": 10, "ritmo": 9000, "sustancia": Infinity, "ubicacion": {"direccion": "Teatro Colón", "provincia": "BSAS"}}
+```
+
+### R.where
+#### [DEMO](http://bit.ly/2ETTDru)
+Las validaciones son difíciles cuando son sobre un objeto en vez de un valor, `R.where` es alto fit, nos deja al igual que `R.evolve` ejecutar una función para cada valor, pero en este caso, va a devolver `true` si todas las funciones devolvieron un truthy value y false si alguna devolvio un falsy value.
+
+```javascript
+const tanBionica = {
+  estilo: 'pop',
+  sustancia: 0,
+  ritmo: 1
+}
+
+const malaFama = {
+  estilo: 'cumbia',
+  sustancia: 99,
+  ritmo: 10
+}
+
+const tieneRitmoYSustancia = R.where({
+  estilo: R.equals('cumbia'),
+  sustancia: R.lt(10),
+  ritmo: R.lt(5)
+})
+
+tieneRitmoYSustancia(tanBionica) // -> false
+tieneRitmoYSustancia(malaFama) // -> true
+```
 
 ## 😱 Fin?
 ![03](./assets/malamacri.jpg)

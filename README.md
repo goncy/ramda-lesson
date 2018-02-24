@@ -89,7 +89,7 @@ Y asi con Ramda
 const lopizadorRamda = R.pipe(
   R.split(" "),
   R.head,
-  darApellido("López")// Podriamos usar R.invoker(1, "concat")(" López") pero let's keep it simple
+  darApellido("López")
 )
 
 lopizadorRamda("Gonzalo Pozzo") // -> Gonzalo López
@@ -159,6 +159,28 @@ const ritmoSustanciar = R.pipe(
 
 ritmoSustanciar('Ahora sos, cabeza de tortuga') // -> Ahora sos, cabeza de tortuga 🔫 japish japish
 ```
+
+### R.assocPath
+#### [DEMO](http://bit.ly/2CiAqBV)
+Muchas veces queremos actualizar un valor que está muy adentro en un objeto, pero tenemos que modificarlo sin mutar el objeto (React o Redux por ejemplo), la solución habitual es ir haciendo `...spread` para cada property, un bajón, `R.assocPath` al rescate.
+
+```javascript
+const bar = {
+  cabina: {
+    pc: {
+      musica: {
+        sonando: 'Despacito - Luis Fonsi'
+      }
+    }
+  }
+}
+
+const ponerRitmo = ritmo => R.assocPath(['cabina', 'pc', 'musica', 'sonando'], ritmo, bar)
+
+ponerRitmo('Mala fama - Aguante la tuca') // -> {"cabina": {"pc": {"musica": {"sonando": "Mala fama - Aguante la tuca"}}}}
+```
+
+> Tip: También tenés `R.assoc` si el cambio que tenes que hacer es sobre un nivel solo.
 
 ## 😱 Fin?
 Bueno, hasta aquí llego mi amor, pero eso no significa que el tuyo también, la docu de Ramda es muy larga y hay +240 helpers! 🤯, así que imaginate todo lo que se puede hacer, se creativo, innova, mete magia, ritmo y sustancia y compartí lo que hagas. Cualquier duda preguntá y nunca, nunca dejes de aprender! (We re filosófico el Goncy)

@@ -20,8 +20,8 @@ Vamos a intentar de explicar esto con ejemplos, imaginemos que tenemos una funci
 const suma = (a, b) => a + b
 ```
 
-Que pasaría si yo hago `suma(1)`?
-Que pasaría si yo hago `suma(1, 2)`?
+* Que pasaría si yo hago `suma(1)`?
+* Que pasaría si yo hago `suma(1, 2)`?
 
 ```javascript
 suma(1) // -> NaN
@@ -36,8 +36,8 @@ Ahora vamos a implementar la misma función usando un helper de Ramda, específi
 const suma = R.curry((a, b) => a + b)
 ```
 
-Que pasaría si yo hago `suma(1)`?
-Que pasaría si yo hago `suma(1, 2)`?
+* Que pasaría si yo hago `suma(1)`?
+* Que pasaría si yo hago `suma(1, 2)`?
 
 ```javascript
 suma(1) // -> fn(n)
@@ -131,7 +131,49 @@ Bueno, cuál fue la diferencia al tener que cambiar la implementación de ambas 
 ## Helpers
 Basta de chacharas, ahora que sabes masomenos de que va esto, vamos a ver algunos de los helpers
 
+### Agregar estado
+#### [DEMO](https://codesandbox.io/s/yp07yw1rmv)
+Cuantas veces pasó que tuvimos que agregar solo una propiedad al state de nuestro componente y tuvimos que hacerlo *class* para eso? `withState` al rescate.
+> ![01](./assets/add-state.gif)
 
+```jsx
+import React from "react"
+import {render} from "react-dom"
+import { withState } from "recompose"
+
+const welcomeable = withState(
+  // El primer parametro va a ser el nombre que queremos darle a nuestro state
+  "welcomed",
+  // El segundo parametro va a ser el nombre que queremos darle a la función que va a setear nuestro state
+  "setWelcomed",
+  // El tercer parametro es el valor inicial de nuestro state
+  true
+)
+
+const addState = welcomeable((
+  // Recibimos nuestras 2 nuevas props
+  { welcomed, setWelcomed }
+) => (
+    <div
+      // Estilos para el contenedor
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "column"
+      }}
+    >
+      <div>{welcomed ? "Hello Gonzalo" : "Fuck you Gonzalo"}</div>
+      <button onClick={() => setWelcomed(!welcomed)}>Toggle</button>
+    </div>
+  ))
+
+// Por comodidad guardamos nuestro componente en la variable App
+const App = addState
+
+// Renderizamos nuestra app
+render(<App />, document.getElementById('root'));
+```
 
 ## 😱 Fin?
 Bueno, hasta aquí llego mi amor, pero eso no significa que el tuyo también, la docu de Ramda es muy larga y hay +240 helpers! 🤯, así que imaginate todo lo que se puede hacer, se creativo, innova, mete magia, ritmo y sustancia y compartí lo que hagas. Cualquier duda preguntá y nunca, nunca dejes de aprender! (We re filosófico el Goncy)

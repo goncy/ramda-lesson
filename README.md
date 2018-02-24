@@ -1,4 +1,4 @@
-# Lección: Remando con Ramda
+# Lección: Remando Ramda con ritmo y sustancia
 Primero que nada, Hola mundo!
 Me llamo **Gonzalo Pozzo** y en el momento de escribir esto era Frontend Developer en [The Next Ad](https://www.thenextad.com/) (De no ser así, hola desde el pasado!).
 Hoy les vengo a hablar de una de las librerias que más uso y más me gusta, [Ramda](http://ramdajs.com/).
@@ -314,6 +314,8 @@ Bueno, hasta aquí llego mi amor, pero eso no significa que el tuyo también, la
 * ✏️ [Ramda REPL](http://ramdajs.com/repl?v=0.25.0)
 
 ## 📚 Más lecciones
+Algunas lecciones que hice:
+
 * [Recompose](https://github.com/goncy/recompose-lesson)
 * [Cypress](https://github.com/goncy/cypress-lesson)
 ---
